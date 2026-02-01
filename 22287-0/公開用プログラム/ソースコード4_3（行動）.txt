@@ -1,0 +1,33 @@
+void move(int a);
+
+void main(void)
+{
+	const BYTE MainCycle = 60;
+	Init((BYTE)MainCycle);		//CPUの初期設定
+		
+	//ループ
+	while(1){
+		move(0);
+		Wait(1000);
+		move(1);
+		Wait(1000);
+		move(2);
+		Wait(1000);
+	}
+}
+
+
+void move(int a){
+	
+	if (a==0){
+		
+		Mtr_Run(-50,50,0,0);//前進
+	}
+	else if(a==1){
+		Mtr_Run(0,50,0,0);//右旋回
+	}
+	else{
+		Mtr_Run(-50,0,0,0);//左旋回
+	}
+	
+}

@@ -1,0 +1,54 @@
+double max_Qval(int s, int num_a, double Qtabl[][5]);
+
+void main(void)
+{
+	//制御周期の設定[単位：Hz　範囲：30.0~]
+	const BYTE MainCycle = 60;
+	int i;
+	double Qtable[1][5];
+	int num_s=1;
+	int num_a=5;
+	double max=0;
+	 
+	Init((BYTE)MainCycle);		//CPUの初期設定
+	
+	Qtable[0][0]=1.0;
+	Qtable[0][1]=3.0;
+	Qtable[0][2]=2.0;
+	Qtable[0][3]=5.0;
+	Qtable[0][4]=1.0;
+		
+	LED(0);
+
+	max=max_Qval(0, num_a, Qtable) ;
+	
+	//ループ
+	while(1){
+		Sync();
+		
+		if(getSW()==1){
+			for(i=0;i<max;i++){
+				LED(0);
+				Wait(500);
+				LED(1);
+				Wait(500);
+				
+			}
+			LED(2);
+			
+		}
+	}
+}
+
+double max_Qval(int s, int num_a, double Qtable[][5]) {
+	double max;
+	int i = 0;
+
+	max = Qtable[s][0];
+	for (i = 1; i<num_a; i++) {
+		if (Qtable[s][i]>max) {
+			max = Qtable[s][i];
+		}
+	}
+	return max;
+}

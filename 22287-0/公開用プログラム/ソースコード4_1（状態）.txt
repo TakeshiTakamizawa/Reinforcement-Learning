@@ -1,0 +1,65 @@
+int get_state();
+
+void main(void)
+{
+	
+	const BYTE MainCycle = 60;
+	int i;
+	int s;
+		 
+	Init((BYTE)MainCycle);		//CPUの初期設定
+	
+	LED(0);
+	
+	//ループ
+	while(1){
+		Sync();
+			
+		if(getSW()==1){
+			s = get_state();
+			for(i=0;i<s;i++){
+				LED(0); //消灯
+				Wait(500);
+				LED(1); //オレンジのLEDを点灯
+				Wait(500);
+				
+			}
+			LED(2);//グリーンのLEDを点灯
+			
+		}
+	
+	}
+		
+}
+
+
+int get_state(){
+	unsigned int data[8];
+	int s;
+	Get_IX008(0x90,data);
+	
+	s=3; //下記以外のとき
+		
+	if( data[1]>300||data[2]>300){
+		s=1; //右のセンターが反応
+		
+		BuzzerSet(220,0x80);
+		BuzzerStart();
+		Wait(50);
+		BuzzerStop();
+	}
+	else if(data[6]>300||data[5]>300 ){
+		s=2; //左のセンターが反応
+		
+		BuzzerSet(110,0x80);
+		BuzzerStart();
+		Wait(50);
+		BuzzerStop();
+	}
+	else if(data[4]>300||data[3]>300 ){
+		s=0;//中心のセンターが反応
+		BuzzerStop();
+	}
+	return s;
+	
+}
