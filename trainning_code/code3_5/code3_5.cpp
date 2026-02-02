@@ -13,29 +13,29 @@ int main()
 	double **Qtable; //Qtable
 	double Q_max = 0;//Q_max
 	double reward = 0; //reward
-	double alpha = 0.5;//Learning coefficient
-	double gamma = 0.9;//Attenuation coefficient
-	int epsilon = 10;//epsilon
-	int trial_max = 100;//
-	int num_a = 2;//
-	int num_s = 2;//
-	int a = 0;//
-	int s = 0;//
-	int sd = 0;//
+	double alpha = 0.5; //Learning coefficient
+	double gamma = 0.9; //Attenuation coefficient
+	int epsilon = 10; //The probability of choosing randomly [%]
+	int trial_max = 100; //Number of attempts
+	int num_a = 2; //Number of action
+	int num_s = 2; //Number of condition
+	int a = 0; //Action
+	int s = 0; //Condition
+	int sd = 0; //
 	int i, j;
 
 
-	//
+	//Random number initialization
 	srand((unsigned)time(NULL));
 
 
-	//�������[��Ԃ̊m��
+	//Memory allocation
 	Qtable = new double*[num_s];
 	for (i = 0; i<num_s; i++) {
 		Qtable[i] = new double[num_a];
 	}
 
-	//Q�l�̏�����
+	//Initialization of Q-values
 	for (i = 0; i<num_s; i++) {
 		for (j = 0; j<num_a; j++) {
 			Qtable[i][j] = 0;
@@ -44,10 +44,10 @@ int main()
 	}
 
 
-	//���s�J�n
+	//Start of trial
 	for (i = 0; i<trial_max; i++) {
 
-		//�s���̑I��
+		//Choice of action
 		a = epsilon_greedy(epsilon, s, num_a, Qtable);
 		//�s���̎��s
 		reward = vending_machine(s, a, sd);
