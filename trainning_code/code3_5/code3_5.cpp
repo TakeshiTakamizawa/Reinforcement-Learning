@@ -13,8 +13,8 @@ int main()
 	double **Qtable; //Qtable
 	double Q_max = 0;//Q_max
 	double reward = 0; //reward
-	double alpha = 0.5;//alpha
-	double gamma = 0.9;//gamma
+	double alpha = 0.5;//Learning coefficient
+	double gamma = 0.9;//Attenuation coefficient
 	int epsilon = 10;//epsilon
 	int trial_max = 100;//
 	int num_a = 2;//
